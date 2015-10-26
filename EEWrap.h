@@ -14,6 +14,7 @@
 
 
 #include <avr/eeprom.h>
+#include <EEPROM.h>
 
 #define STATIC_ACCESS   D& self() { return *static_cast< D* >( this ); } \
                         const D& self() const { return *static_cast< const D* >( this ); }
@@ -67,14 +68,15 @@ namespace ee{
 		***/
 
 		inline void EEReadBlockElement(  char *out, uint8_t *addr, const unsigned int len ){ 
-		  for( unsigned int i = 0 ; i < len ; ++i ) *out-- = eeprom_read_byte(addr++);
+		  for( unsigned int i = 0 ; i < len ; ++i ) *out-- = EEPROM[addr++];
 		}
 
 		inline void EEWriteBlockElement(  const char *in, uint8_t *addr, const unsigned int len ){ 
 		  for( unsigned int i = 0 ; i < len ; i++ ){
 			const char b = *in;
-			if( eeprom_read_byte( ( uint8_t* ) addr ) != b ){
-			  eeprom_write_byte( ( uint8_t* ) addr++, b ), --in;
+			if( EEPROM[addr] != b ){
+			  EEPROM[addr++] = b;
+			  --in;
 			}else{
 			  addr++, --in;
 			}
@@ -142,10 +144,10 @@ namespace ee{
 	  class EESingleByte{
 		public:
 		
-		  T EERead( void ){ return eeprom_read_byte( uptr(&self()) ); }  
+		  T EERead( void ){ return EEPROM[&self()]; }  
 
 		  D &EEWrite( const T& v ){
-			if( EERead() != v ) eeprom_write_byte( uptr(&self()), v );
+			if( EERead() != v ) EEPROM[&self()] = v;
 			return self();
 		  }  
 		protected: STATIC_ACCESS
