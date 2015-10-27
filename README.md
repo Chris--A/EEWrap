@@ -34,7 +34,8 @@ C/C++ type | EEWrap type
 **`unsigned long long`** | **`uint64_e`**
 **`bool`** | **`bool_e`**
 **`float`** | **`float_e`**
-**`float`** | **`float_e`**
+**`double`** | **`double_e`**
+**`long double`** | **`long_double_e`**
 
 You can also wrap any custom types by using the `EEWrap` class directly to create your own types.
 For example, `int16_e` is equivalent to `EEWrap< int >`.
