@@ -1,0 +1,22 @@
+
+#######################################
+# Syntax Colouring Map For EEWrap
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+EEWrap	KEYWORD1
+uint8_e	KEYWORD1
+uint16_e	KEYWORD1
+uint32_e	KEYWORD1
+uint64_e	KEYWORD1
+int8_e	KEYWORD1
+int16_e	KEYWORD1
+int32_e	KEYWORD1
+int64_e	KEYWORD1
+bool_e	KEYWORD1
+float_e	KEYWORD1
+double_e	KEYWORD1
+long_double_e	KEYWORD1
