@@ -2,6 +2,10 @@
 
 This library makes the EEPROM simple. In fact you do not even need to think about the EEPROM.
 
+## Installation:
+
+This library is available from the IDE library manager, simply find it in the list, click on its entry and press install!
+
 ## Setup:
 
 All you have to do is include the EEPROM functionality and the `EEWrap` library.
@@ -20,19 +24,19 @@ The library provides some predefined types for all the basic standard C++ types.
 
 C/C++ type | EEWrap type
 ------------ | -------------
-`char` | `int8_e`
-`unsigned char` | `uint8_e`
-`int` | `int16_e`
-`unsigned int` | `uint16_e`
-`long` | `int32_e`
-`unsigned long` | `uint32_e`
-`long long` | `int64_e`
-`unsigned long long` | `uint64_e`
-`bool` | `bool_e`
-`float` | `float_e`
-`float` | `float_e`
+**`char`** | **`int8_e`**
+**`unsigned char`** | **`uint8_e`**
+**`int`** | **`int16_e`**
+**`unsigned int`** | **`uint16_e`**
+**`long`** | **`int32_e`**
+**`unsigned long`** | **`uint32_e`**
+**`long long`** | **`int64_e`**
+**`unsigned long long`** | **`uint64_e`**
+**`bool`** | **`bool_e`**
+**`float`** | **`float_e`**
+**`float`** | **`float_e`**
 
-You can also wrap any custom types by using the EEWrap class directly to create your own types.
+You can also wrap any custom types by using the `EEWrap` class directly to create your own types.
 For example, `int16_e` is equivalent to `EEWrap< int >`.
 
 You can declare an instance of these types in the standard way, you just add the EEPROM specifier `EEMEM` to the end of it.
@@ -46,6 +50,8 @@ Simple huh?
 
 ## Examples
 
+**Using a single variable:**
+
 ```C++
 
 //Declare an unsigned long as an eeprom variable.
@@ -58,7 +64,7 @@ void updateTime(){
 }
 ```
 
-Or the equivalent, with a custom EEPROM location.
+**Or the equivalent, with a custom EEPROM location:**
 ```C++
 
 //Declare an unsigned long as an eeprom variable.
@@ -69,7 +75,8 @@ void updateTime(){
 }
 ```
 
-You can declare arrays as usual.
+**You can declare arrays as usual:**
+
 ```C++
 
 uint8_e str[ 6 ];
@@ -82,7 +89,7 @@ str[4] = 'o';
 str[5] = 0;
 ```
 
-And a complete example using a struct/class:
+**And a complete example using a `struct`/`class`:**
 
 ```arduino
 #include <EEPROM.h>
@@ -113,6 +120,3 @@ void setup(){
 
 void loop() {}
 ```
-
-
-
