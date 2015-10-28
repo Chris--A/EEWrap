@@ -40,8 +40,8 @@ namespace ee{
             Select different types based on a condition, an 'if statement' for types.
             The type Select<V,T,F>::Result is type T when V is true, otherwise it is set to type F.
         ***/
-        template< bool V, typename T, typename F > struct Select{ typedef T Result; };
-        template< typename T, typename F > struct Select< false, T, F >{ typedef F Result; };
+        template< bool V, typename T, typename F > struct select{ typedef T type; };
+        template< typename T, typename F > struct select< false, T, F >{ typedef F type; };
 
         /** A basic comparison of two types **/
         template < typename T, typename U > struct is_same{ enum { value = false }; };
@@ -87,12 +87,8 @@ namespace ee{
         inline void EEWriteBlockElement(  const char *in, uint8_t *addr, const unsigned int len ){
             for( unsigned int i = 0 ; i < len ; i++ ){
                 const char b = *in;
-                if( EEPROM[int(addr)] != b ){
-                    EEPROM[int(addr++)] = b;
-                    --in;
-                }else{
-                    addr++, --in;
-                }
+                EEPROM[int(addr++)].update(b);
+                --in;
             }
         }
 
@@ -105,6 +101,11 @@ namespace ee{
             D &operator -=( const T &in ){ return self().EEWrite( self().EERead() - in ); }
             D &operator *=( const T &in ){ return self().EEWrite( self().EERead() * in ); }
             D &operator /=( const T &in ){ return self().EEWrite( self().EERead() / in ); }
+
+            D &operator |=( const T &in ){ return self().EEWrite( self().EERead() | in ); }
+            D &operator &=( const T &in ){ return self().EEWrite( self().EERead() & in ); }
+            D &operator %=( const T &in ){ return self().EEWrite( self().EERead() % in ); }
+            D &operator ^=( const T &in ){ return self().EEWrite( self().EERead() ^ in ); }
 
             template< typename U > D &operator <<=( const U &in ){ return self().EEWrite( self().EERead() << in ); }
             template< typename U > D &operator >>=( const U &in ){ return self().EEWrite( self().EERead() >> in ); }
@@ -158,28 +159,28 @@ namespace ee{
         T EERead( void ){ return EEPROM[int(&self())]; }
 
         D &EEWrite( const T& v ){
-            if( EERead() != v ) EEPROM[int(&self())] = v;
+            EEPROM[int(&self())].update(v);
             return self();
         }
         protected: STATIC_ACCESS
     };
 
-    /** EEMode is a helper to encapsulate the  **/
+    /** EEMode is a helper to encapsulate functionality for primitive types **/
     template< typename T > struct EEMode{
 
         //Select the most appropriate method based on the size of T. No loops are needed for single byte types.
-        typedef typename tools::Select<
+        typedef typename tools::select<
             sizeof(T) == 1,
             EESingleByte< EEWrap<T>, T>,
             EEMultiByte< EEWrap<T>, T >
-        >::Result Interface;
+        >::type Interface;
 
         //If T is a primitive type, the standard operators are exposed (class PrimitiveWrap).
-        typedef typename tools::Select<
+        typedef typename tools::select<
             tools::is_fundamental<T>::value,
             PrimitiveWrap< EEWrap<T>, T >,
             NoPrimitiveWrap
-        >::Result Extension;
+        >::type Extension;
     };
 
 } //namespace ee
