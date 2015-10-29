@@ -2,7 +2,7 @@
 
 This library makes the EEPROM simple. In fact you do not even need to think about the EEPROM.
 
-**\*Want the PROGMEM version? Check out the equivalent [PGMWrap](https://github.com/Chris--A/PGMWrap) library.\***
+**Want the PROGMEM version? Check out the equivalent [PGMWrap](https://github.com/Chris--A/PGMWrap) library.**
 
 ## Installation:
 
