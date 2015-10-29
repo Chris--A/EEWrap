@@ -2,6 +2,8 @@
 
 This library makes the EEPROM simple. In fact you do not even need to think about the EEPROM.
 
+**\*Want the PROGMEM version? Check out the equivalent [PGMWrap](https://github.com/Chris--A/PGMWrap) library.\***
+
 ## Installation:
 
 This library is available from the IDE library manager, simply find it in the list, click on its entry and press install!
